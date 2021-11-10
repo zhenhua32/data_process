@@ -60,22 +60,11 @@ def translate_file(input_file: str, output_file: str, text_length: int = 1000):
 
 
 if __name__ == "__main__":
-    url = "https://translate.google.cn/?hl=zh-CN&sl=zh-CN&tl=en&op=translate"
+    url = "https://translate.google.cn/?hl=zh-CN=&sl=zh-CN&tl=es&op=translate"
 
-    query = """
-连衣裙
-真丝连衣裙
-女装
-真丝香云纱连衣裙
-桑蚕丝a字裙大牌
-女连衣裙
-真丝女装
-长裙
-重磅真丝连衣裙大牌欧美时尚
-的女装
-桑蚕丝连衣裙
-    """
-    # print(translate(query))
+    # TODO: 并没有什么用, 翻译的准确性和网页上翻译是不一样的
+    query = "洋酒白兰地"
+    print(translate(query))
 
-    translate_file("./data/query.txt", "./data/query_result.txt")
+    # translate_file("./data/query.txt", "./data/query_result.txt")
     driver.quit()
