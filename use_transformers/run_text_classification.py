@@ -409,7 +409,6 @@ def main():
             metrics = ["accuracy"]
         model.compile(optimizer=optimizer, loss=loss_fn, metrics=metrics)
         model.summary()
-        return
         # endregion
 
         # region Convert data to a tf.data.Dataset
