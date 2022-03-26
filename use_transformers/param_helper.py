@@ -137,7 +137,7 @@ class ModelArguments:
 # endregion
 
 
-def load_params():
+def load_params(json_file=None):
     """
     加载命令行中定义的参数
     """
@@ -148,7 +148,9 @@ def load_params():
 
     parser = HfArgumentParser((ModelArguments, DataTrainingArguments, TFTrainingArguments))
     # 支持 json 格式, 就是只传入一个 json 文件, 这是最方便的格式
-    if len(sys.argv) == 2 and sys.argv[1].endswith(".json"):
+    if json_file:
+        model_args, data_args, training_args = parser.parse_json_file(json_file=os.path.abspath(json_file))
+    elif len(sys.argv) == 2 and sys.argv[1].endswith(".json"):
         # If we pass only one argument to the script and it's the path to a json file,
         # let's parse it to get our arguments.
         model_args, data_args, training_args = parser.parse_json_file(json_file=os.path.abspath(sys.argv[1]))

@@ -80,6 +80,7 @@ def main():
         model.compile(optimizer=optimizer, loss=loss_fn, metrics=metrics)
         model.summary()
         # endregion
+        return
 
         # region Training and validation
         if tf_data["train"] is not None:
