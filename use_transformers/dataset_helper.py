@@ -224,6 +224,7 @@ def covert_to_tf_dataset(
         if samples_limit is not None:
             dataset = dataset.select(range(samples_limit))
 
+        # 如果是层次分类
         if is_layer_label:
             label_cols = [x for x in dataset.column_names if x.startswith("output_")]
             label_cols = label_cols if label_cols else None
@@ -317,6 +318,7 @@ def load_data_layer(
     # 保存一下 tokenizer
     tokenizer.save_pretrained(training_args.output_dir)
 
+    # 用各种方式猜测列表, 最多只能有两个列, sentence1 和 sentence2
     column_names = {col for cols in datasets.column_names.values() for col in cols}
     non_label_column_names = [name for name in column_names if name != "label"]
     if "sentence1" in non_label_column_names and "sentence2" in non_label_column_names:
@@ -329,6 +331,7 @@ def load_data_layer(
         else:
             sentence1_key, sentence2_key = non_label_column_names[0], None
 
+    # 确定序列的最大长度
     if data_args.max_seq_length > tokenizer.model_max_length:
         logger.warning(
             f"The max_seq_length passed ({data_args.max_seq_length}) is larger than the maximum length for the"
@@ -336,6 +339,7 @@ def load_data_layer(
         )
     max_seq_length = min(data_args.max_seq_length, tokenizer.model_max_length)
 
+    # 检查标签正常
     # Ensure that our labels match the model's, if it has some pre-specified
     label1_to_id = {v: i for i, v in enumerate(labels1)}
     label2_to_id = {v: i for i, v in enumerate(labels2)}
@@ -368,4 +372,5 @@ def load_data_layer(
         data_collator = DataCollatorWithPadding(tokenizer, return_tensors="tf")
     # endregion
 
+    # 第三个返回值是 is_regression, 这里没有兼容回归训练, 所以直接是 False
     return datasets, config, False, data_collator, non_label_column_names

@@ -20,24 +20,27 @@ import logging
 import os
 
 import numpy as np
-from transformers import TFAutoModelForSequenceClassification, set_seed, create_optimizer
+from transformers import set_seed, create_optimizer
 
 import tensorflow as tf  # noqa: E402
 
 # import tensorflow.python.keras as keras
 import tensorflow.keras as keras
 
-
+# 不使用 from transformers import TFAutoModelForSequenceClassification
+# 而是用自己重新定义的分类模型, 修改了模型输出
+from model_helper import TFBertForSequenceClassification
 from param_helper import load_params, SavePretrainedCallback
-from dataset_helper import load_data, covert_to_tf_dataset
+from dataset_helper import load_data_layer, covert_to_tf_dataset
 
 logger = logging.getLogger(__name__)
 os.environ["TF_CPP_MIN_LOG_LEVEL"] = "1"  # Reduce the amount of console output from TF
 
 
 def main():
+    # 没支持回归, 所以 is_regression 就没用了
     model_args, data_args, training_args, checkpoint = load_params()
-    datasets, config, is_regression, data_collator, non_label_column_names = load_data(
+    datasets, config, is_regression, data_collator, non_label_column_names = load_data_layer(
         model_args, data_args, training_args, checkpoint
     )
     tf_data = covert_to_tf_dataset(datasets, data_args, training_args, data_collator, non_label_column_names)
@@ -53,17 +56,17 @@ def main():
             model_path = model_args.model_name_or_path
         else:
             model_path = checkpoint
-        model = TFAutoModelForSequenceClassification.from_pretrained(
+        model = TFBertForSequenceClassification.from_pretrained(
             model_path,
             config=config,
             cache_dir=model_args.cache_dir,
             revision=model_args.model_revision,
             use_auth_token=True if model_args.use_auth_token else None,
         )
+        model.summary()
         # endregion
 
         # region Optimizer, loss and compilation
-
         optimizer = keras.optimizers.Adam(
             learning_rate=training_args.learning_rate,
             beta_1=training_args.adam_beta1,
@@ -71,16 +74,13 @@ def main():
             epsilon=training_args.adam_epsilon,
             clipnorm=training_args.max_grad_norm,
         )
-        if is_regression:
-            loss_fn = keras.losses.MeanSquaredError()
-            metrics = []
-        else:
-            loss_fn = keras.losses.SparseCategoricalCrossentropy(from_logits=True)
-            metrics = ["accuracy"]
-        model.compile(optimizer=optimizer, loss=loss_fn, metrics=metrics)
-        model.summary()
+        # 定义两个损失函数
+        loss_fn = keras.losses.SparseCategoricalCrossentropy(from_logits=True)
+        loss_fn2 = keras.losses.SparseCategoricalCrossentropy(from_logits=True)
+        metrics = ["accuracy"]
+        # model.compile(optimizer=optimizer, loss={"output_1": loss_fn, "output_2": loss_fn2}, metrics=metrics)
+        model.compile(optimizer=optimizer, loss=[loss_fn, loss_fn2], metrics=metrics)
         # endregion
-        return
 
         # region Training and validation
         if tf_data["train"] is not None:
@@ -102,6 +102,7 @@ def main():
                 logger.info(f"Loss: {loss:.5f}, Accuracy: {accuracy * 100:.4f}%")
         # endregion
 
+        # 这个没验证过, 因为有两个输出, 可能需要改动
         # region Prediction
         if tf_data["test"] is not None:
             logger.info("Doing predictions on test dataset...")

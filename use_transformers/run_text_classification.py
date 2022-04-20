@@ -35,6 +35,11 @@ logger = logging.getLogger(__name__)
 os.environ["TF_CPP_MIN_LOG_LEVEL"] = "1"  # Reduce the amount of console output from TF
 
 
+"""
+普通分类的版本
+"""
+
+
 def main():
     model_args, data_args, training_args, checkpoint = load_params()
     datasets, config, is_regression, data_collator, non_label_column_names = load_data(

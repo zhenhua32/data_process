@@ -35,6 +35,7 @@ class SavePretrainedCallback(tf.keras.callbacks.Callback):
 @dataclass
 class DataTrainingArguments:
     """
+    训练相关的参数
     Arguments pertaining to what data we are going to input our model for training and eval.
 
     Using `HfArgumentParser` we can turn this class
@@ -105,6 +106,7 @@ class DataTrainingArguments:
 @dataclass
 class ModelArguments:
     """
+    模型相关的参数
     Arguments pertaining to which model/config/tokenizer we are going to fine-tune from.
     """
 
@@ -165,6 +167,7 @@ def load_params(json_file=None):
     output_dir.mkdir(parents=True, exist_ok=True)
     # endregion
 
+    # 检查最近的存储点
     # region Checkpoints
     # Detecting last checkpoint.
     checkpoint = None

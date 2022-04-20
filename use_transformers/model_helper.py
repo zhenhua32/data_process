@@ -11,6 +11,11 @@ _CONFIG_FOR_DOC = "BertConfig"
 _TOKENIZER_FOR_DOC = "BertTokenizer"
 
 
+"""
+来自 https://github.com/huggingface/transformers/blob/main/src/transformers/models/bert/modeling_tf_bert.py
+"""
+
+
 class TFSequenceClassificationLoss:
     """
     Loss function suitable for sequence classification.
@@ -98,6 +103,7 @@ class TFBertForSequenceClassification(TFBertPreTrainedModel, TFSequenceClassific
             config.num_labels - 1]`. If `config.num_labels == 1` a regression loss is computed (Mean-Square loss), If
             `config.num_labels > 1` a classification loss is computed (Cross-Entropy).
         """
+        # 调用 bert 模型
         outputs = self.bert(
             input_ids=input_ids,
             attention_mask=attention_mask,
@@ -110,6 +116,7 @@ class TFBertForSequenceClassification(TFBertPreTrainedModel, TFSequenceClassific
             return_dict=return_dict,
             training=training,
         )
+        # 池化层输出
         pooled_output = outputs[1]
 
         # 第一个输出
@@ -124,6 +131,7 @@ class TFBertForSequenceClassification(TFBertPreTrainedModel, TFSequenceClassific
 
         # 返回有两种格式, 一种是按类字典类返回, 一种是按元组返回
         if not return_dict:
+            # 有 loss 的时候返回 loss, 没有的时候返回 logits
             output = (logits1, logits2) + outputs[2:]
             if loss1 and loss2:
                 output = (loss1, loss2) + output
