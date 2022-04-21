@@ -43,7 +43,7 @@ def main():
     datasets, config, is_regression, data_collator, non_label_column_names = load_data_layer(
         model_args, data_args, training_args, checkpoint
     )
-    tf_data = covert_to_tf_dataset(datasets, data_args, training_args, data_collator, non_label_column_names)
+    tf_data = covert_to_tf_dataset(datasets, data_args, training_args, data_collator, non_label_column_names, True)
 
     with training_args.strategy.scope():
         # region Load pretrained model
