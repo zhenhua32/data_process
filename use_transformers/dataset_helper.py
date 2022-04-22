@@ -230,6 +230,9 @@ def covert_to_tf_dataset(
             label_cols = label_cols if label_cols else None
         else:
             label_cols = "label" if "label" in dataset.column_names else None
+        if label_cols is None:
+            print(dataset.column_names)
+            print("警告, 如果不是在预测阶段, 需要注意没有指定 label 列")
 
         data = dataset.to_tf_dataset(
             columns=[col for col in dataset.column_names if col not in set(non_label_column_names + ["label"])],
