@@ -36,6 +36,10 @@ from dataset_helper import load_data_layer, covert_to_tf_dataset
 logger = logging.getLogger(__name__)
 os.environ["TF_CPP_MIN_LOG_LEVEL"] = "1"  # Reduce the amount of console output from TF
 
+"""
+有两个输出的版本
+"""
+
 
 def main():
     # 没支持回归, 所以 is_regression 就没用了

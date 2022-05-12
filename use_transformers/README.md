@@ -9,3 +9,9 @@
 # 目的
 
 使用多级分类, 即层次分类.
+
+# 天池
+
+https://github.com/kangyishuai/NEWS-TEXT-CLASSIFICATION?spm=5176.21852664.0.0.c1ab49f5xb3JDR
+https://tianchi.aliyun.com/forum/postDetail?spm=5176.12586969.1002.36.6406111au4oH2z&postId=128789
+https://kexue.fm/archives/7234?spm=5176.21852664.0.0.c1ab49f5NY6ZWw
