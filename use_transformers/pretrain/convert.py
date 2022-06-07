@@ -113,5 +113,6 @@ if __name__ == "__main__":
 
 
 """
+将预训练好的 pytorch 模型转换为 tf 检查点的格式
 --model_name "pretrained_bert" --pytorch_model_path "pretrained_bert/pytorch_model.bin" --tf_cache_dir "tf_model"
 """
