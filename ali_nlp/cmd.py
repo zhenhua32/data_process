@@ -1,5 +1,6 @@
 import time
 import json
+from multiprocessing.dummy import Pool
 
 from client import Client, params_model
 
@@ -110,7 +111,26 @@ def test3():
     print(time.time() - start)
 
 
+def test4():
+    start = time.time()
+    client = Client(".env")
+    pool = Pool(20)
+    with open("test.txt", "w", encoding="utf-8") as f:
+        while True:
+            cur_time = time.time()
+            params = params_model.ReqGetWsChGeneral(Text="我是中国人")
+            params_list = [params] * 20
+            # 并发请求
+            result = pool.map(client.request_without_exception, params_list)
+            for resp in result:
+                f.write(json.dumps(resp, ensure_ascii=False) + "\n")
+            now = time.time()
+            print(cur_time, now)
+            # 时间不到 1 秒, 就等待, 然后开始下一次并发请求
+            wait_time = 1 - (now - cur_time)
+            if wait_time > 0:
+                time.sleep(wait_time)
+
+
 if __name__ == "__main__":
-    # test()
-    # test2()
-    test3()
+    test4()

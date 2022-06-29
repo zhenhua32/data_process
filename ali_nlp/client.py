@@ -41,6 +41,13 @@ class Client:
         response = self.client.do_action_with_exception(request)
         resp_obj = json.loads(response)
         return resp_obj
+    
+    def request_without_exception(self, params: params_model.BaseReq):
+        try:
+            result = self.request(params)
+        except Exception as e:
+            result = {"exception": str(e)}
+        return result
 
 
 if __name__ == "__main__":
