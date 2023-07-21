@@ -22,12 +22,22 @@ def Levenshtein_Distance_Recursive(str1, str2):
 
 # 动态规划方式
 def Levenshtein_Distance_DP(str1, str2):
+    """
+    矩阵是这样看的,
+    比如 str1 = "ab", str2 = "adc"
+       c a b
+      0 1 2 3
+    a 1 1 1 2
+    b 2
+
+    比如 第一个字符串的 a, 怎么变换成 c, ca, cab. 结果就是 1, 1, 2. 所以这就是第一行中的后三个值.
+    """
     # 两个字符串的长度
     len1 = len(str1)
     len2 = len(str2)
     # dp = np.zeros((len1 + 1, len2 + 1))
     # 构建一个 (len1 + 1) * (len2 + 1) 的二维数组, 并初始化
-    dp = [[0 for i in range(len2 + 1)] for j in range(len1 + 1)]
+    dp = [[0 for _ in range(len2 + 1)] for _ in range(len1 + 1)]
     # 遍历第一个字符串的每个位置, 包括空串
     for i in range(len1 + 1):
         # 初始化第一列, 表示从第一个字符串到空串的编辑距离
@@ -63,3 +73,4 @@ if __name__ == "__main__":
     text2 = "hamming (str1, str2)，计算长度相等的字符串str1和str2的汉明距离"
     # print(Levenshtein_Distance_Recursive(text1, text2))
     print(Levenshtein_Distance_DP(text1, text2))
+    print(Levenshtein_Distance_DP("ab", "cab"))
