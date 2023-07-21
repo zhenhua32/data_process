@@ -25,10 +25,10 @@ def Levenshtein_Distance_DP(str1, str2):
     """
     矩阵是这样看的,
     比如 str1 = "ab", str2 = "adc"
-       c a b
+        c a b
       0 1 2 3
     a 1 1 1 2
-    b 2
+    b 2 2 2 1
 
     比如 第一个字符串的 a, 怎么变换成 c, ca, cab. 结果就是 1, 1, 2. 所以这就是第一行中的后三个值.
     """
