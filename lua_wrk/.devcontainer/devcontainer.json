@@ -14,9 +14,12 @@
 	// Use 'forwardPorts' to make a list of ports inside the container available locally.
 	// "forwardPorts": [],
 
+	"remoteEnv": {
+		"PATH": "/workspaces/data_process/lua_wrk/bin:$PATH"
+	},
+
 	// Use 'postCreateCommand' to run commands after the container is created.
-	// "postCreateCommand": "pip3 install --user -r requirements.txt",
-	"postCreateCommand": "export PATH=/workspaces/data_process/lua_wrk/bin:$PATH"
+	"postCreateCommand": "pip install --user -r requirements.txt"
 
 	// Configure tool-specific properties.
 	// "customizations": {},
