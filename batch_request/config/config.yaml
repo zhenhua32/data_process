@@ -1,0 +1,6 @@
+api_a:
+  url: "http://localhost:8080"
+  name: "api_a"
+api_b:
+  url: "http://localhost:8081"
+  name: "api_b"
