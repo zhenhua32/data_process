@@ -8,6 +8,7 @@ os.system("sudo nginx -c /home/tzh/code/nginx.conf")
 
 time.sleep(5)
 
+
 def get_result():
     url = "http://localhost:8123"
     response = requests.get(url)
