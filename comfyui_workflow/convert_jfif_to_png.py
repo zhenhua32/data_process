@@ -4,6 +4,9 @@ from tqdm import tqdm
 
 
 def convert_to_png(input_dir: str, output_dir: str):
+    """
+    将输入目录中的所有 .jfif 文件转换为 .png 文件
+    """
     # 确保输出目录存在
     os.makedirs(output_dir, exist_ok=True)
 
@@ -30,6 +33,9 @@ def convert_to_png(input_dir: str, output_dir: str):
 
 
 def resize_png_image(input_dir: str, output_dir: str, least_size: int = 1024):
+    """
+    将输入目录中的所有 .png 文件调整为指定尺寸
+    """
     os.makedirs(output_dir, exist_ok=True)
 
     for filename in tqdm(os.listdir(input_dir)):
