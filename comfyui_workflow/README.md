@@ -5,6 +5,8 @@
 ```bash
 E:\LORA_TRAIUN\JINGTIAN\DATASET
 ├─000lora_49  # 49 张图训练的 lora
+├─000lora_120  # 120 张图训练的 lora, 大模型自然语言描述
+├─000lora_120_gbt  # 120 张图训练的 lora, 标签只有固定的触发词 gbt
 ├─000output_120  # 120 张图复杂打标, 大模型自然语言描述
 ├─000output_120_gbt  # 120 张图, 标签只有固定的触发词 gbt
 ├─000output_49  # 49 张图复杂打标

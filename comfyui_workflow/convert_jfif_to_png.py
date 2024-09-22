@@ -62,7 +62,7 @@ def resize_png_image(input_dir: str, output_dir: str, least_size: int = 1024):
 
 if __name__ == "__main__":
     # 定义输入和输出目录
-    input_dir = r"E:\lora_traiun\jingtian\dataset\000sd_png"
-    output_dir = r"E:\lora_traiun\jingtian\dataset\000sd_png_1024"
+    input_dir = r"E:\lora_traiun\yona\dataset\000sd"
+    output_dir = r"E:\lora_traiun\yona\dataset\000sd_png_1024"
 
     resize_png_image(input_dir, output_dir, 1024)
