@@ -39,7 +39,7 @@ def resize_png_image(input_dir: str, output_dir: str, least_size: int = 1024):
     os.makedirs(output_dir, exist_ok=True)
 
     for filename in tqdm(os.listdir(input_dir)):
-        if filename.endswith(".png"):
+        if filename.endswith(".png") or filename.endswith(".jpg"):
             png_path = os.path.join(input_dir, filename)
             with Image.open(png_path) as img:
                 # 获取原始尺寸
@@ -62,7 +62,7 @@ def resize_png_image(input_dir: str, output_dir: str, least_size: int = 1024):
 
 if __name__ == "__main__":
     # 定义输入和输出目录
-    input_dir = r"E:\lora_traiun\yona\dataset\000sd"
-    output_dir = r"E:\lora_traiun\yona\dataset\000sd_png_1024"
+    input_dir = r"E:\lora_traiun\dilireba\dataset\000sd"
+    output_dir = r"E:\lora_traiun\dilireba\dataset\000sd_png_1024"
 
     resize_png_image(input_dir, output_dir, 1024)
