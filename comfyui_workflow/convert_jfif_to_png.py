@@ -1,6 +1,10 @@
 import os
 from PIL import Image
 from tqdm import tqdm
+from tqdm.contrib.concurrent import process_map, thread_map
+
+# 增加图像大小限制, 里面有超大图
+Image.MAX_IMAGE_PIXELS = None
 
 
 def convert_to_png(input_dir: str, output_dir: str):
@@ -38,7 +42,7 @@ def resize_png_image(input_dir: str, output_dir: str, least_size: int = 1024):
     """
     os.makedirs(output_dir, exist_ok=True)
 
-    for filename in tqdm(os.listdir(input_dir)):
+    def run_one(filename):
         if filename.endswith(".png") or filename.endswith(".jpg"):
             png_path = os.path.join(input_dir, filename)
             with Image.open(png_path) as img:
@@ -59,10 +63,14 @@ def resize_png_image(input_dir: str, output_dir: str, least_size: int = 1024):
                 # 保存为 .png 文件
                 img.save(output_path, "PNG")
 
+    worker_num = max(os.cpu_count() - 2, 8)
+    print("cpu 数量", os.cpu_count(), "worker_num", worker_num)
+    thread_map(run_one, os.listdir(input_dir), max_workers=worker_num)
+
 
 if __name__ == "__main__":
     # 定义输入和输出目录
-    input_dir = r"E:\lora_traiun\dilireba\dataset\000sd"
-    output_dir = r"E:\lora_traiun\dilireba\dataset\000sd_png_1024"
+    input_dir = r"E:\lora_traiun\yangmi\dataset\001sd"
+    output_dir = r"E:\lora_traiun\yangmi\dataset\001sd_png_1024"
 
     resize_png_image(input_dir, output_dir, 1024)
