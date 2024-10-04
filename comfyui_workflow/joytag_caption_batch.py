@@ -1,6 +1,7 @@
 """
 批量打标, 来自 https://github.com/MNeMoNiCuZ/joy-caption-batch/tree/main
 """
+
 import spaces
 import gradio as gr
 from huggingface_hub import InferenceClient
@@ -42,7 +43,7 @@ OUTPUT_FOLDER = INPUT_FOLDER
 VLM_PROMPT = "A descriptive caption for this image:\n"  # Changing this doesn't seem to matter. Help plz?
 TEMPERATURE = 0.5  # Controls the randomness of predictions. Lower values make the output more focused and deterministic, while higher values increase randomness.
 TOP_K = 10  # Limits the sampling pool to the top K most likely options at each step. A lower value makes the output more deterministic, while a higher value allows more diversity.
-MAX_NEW_TOKENS = 200  # The maximum number of tokens to generate. This limits the length of the generated text.
+MAX_NEW_TOKENS = 300  # The maximum number of tokens to generate. This limits the length of the generated text.
 
 # Clip path
 if RUN_LOCAL:
@@ -178,25 +179,31 @@ except (torch.nn.modules.module.ModuleAttributeError, _pickle.UnpicklingError):
 
 @spaces.GPU()
 @torch.no_grad()
-def process_image(input_image_path: Path):
+def process_images_batch(image_paths: list):
+    """
+    改造成 batch 推理, 单次传入的图片数量是 batch_size
+    """
     torch.cuda.empty_cache()
 
-    # Preprocess image
-    input_image = Image.open(input_image_path).convert("RGB")
-    image = clip_processor(images=input_image, return_tensors="pt").pixel_values
-    image = image.to("cuda")
+    # Preprocess images
+    images = [Image.open(image_path).convert("RGB") for image_path in image_paths]
+    images = clip_processor(images=images, return_tensors="pt").pixel_values
+    images = images.to("cuda")
+    print("images shape", images.shape)  # [4, 3, 384, 384]
 
     # Tokenize the prompt
     prompt = tokenizer.encode(
         VLM_PROMPT, return_tensors="pt", padding=False, truncation=False, add_special_tokens=False
     )
 
-    # Embed image
+    # Embed images
     with torch.amp.autocast_mode.autocast("cuda", enabled=True):
-        vision_outputs = clip_model(pixel_values=image, output_hidden_states=True)
+        vision_outputs = clip_model(pixel_values=images, output_hidden_states=True)
         image_features = vision_outputs.hidden_states[-2]
+        print("image_features shape", image_features.shape)  # [4, 729, 1152]
         embedded_images = image_adapter(image_features)
         embedded_images = embedded_images.to("cuda")
+        print("embedded_images shape", embedded_images.shape)  # [4, 729, 4096]
 
     # Embed prompt
     prompt_embeds = text_model.model.embed_tokens(prompt.to("cuda"))
@@ -218,18 +225,20 @@ def process_image(input_image_path: Path):
         ],
         dim=1,
     )
+    print("inputs_embeds shape", inputs_embeds.shape)  # [4, 737, 4096]
 
     input_ids = torch.cat(
         [
-            torch.tensor([[tokenizer.bos_token_id]], dtype=torch.long),
-            torch.zeros((1, embedded_images.shape[1]), dtype=torch.long),
-            prompt,
+            torch.tensor([[tokenizer.bos_token_id]], dtype=torch.long).expand(embedded_images.shape[0], -1),
+            torch.zeros((embedded_images.shape[0], embedded_images.shape[1]), dtype=torch.long),
+            prompt.expand(embedded_images.shape[0], -1),
         ],
         dim=1,
     ).to("cuda")
+    print("input_ids shape", input_ids.shape)  # [4, 737]
     attention_mask = torch.ones_like(input_ids)
 
-    # Generate caption
+    # Generate captions
     generate_ids = text_model.generate(
         input_ids,
         inputs_embeds=inputs_embeds,
@@ -240,41 +249,48 @@ def process_image(input_image_path: Path):
         temperature=TEMPERATURE,
         suppress_tokens=None,
     )
+    print("generate_ids shape", generate_ids.shape)  # [4, 937]
 
     # Trim off the prompt
     generate_ids = generate_ids[:, input_ids.shape[1] :]
-    if generate_ids[0][-1] == tokenizer.eos_token_id:
-        generate_ids = generate_ids[:, :-1]
+    # 如果生成的句子以 eos 结尾, 则去掉 eos
+    # generate_ids[generate_ids[:, -1] == tokenizer.eos_token_id] = generate_ids[:, :-1]
 
-    # Prepend/Append strings to the generated caption
-    caption = f"{PREPEND_STRING}{tokenizer.batch_decode(generate_ids, skip_special_tokens=False, clean_up_tokenization_spaces=False)[0]}{APPEND_STRING}"
+    # Prepend/Append strings to the generated captions
+    captions = [
+        f"{PREPEND_STRING}{tokenizer.decode(ids, skip_special_tokens=True, clean_up_tokenization_spaces=False)}{APPEND_STRING}".strip()
+        for ids in generate_ids
+    ]
 
-    # Save caption to text file in the same directory as the image
-    output_file_path = input_image_path.parent / (input_image_path.stem + ".txt")
+    # Save captions to text files in the same directory as the images
+    for image_path, caption in zip(image_paths, captions):
+        output_file_path = image_path.parent / (image_path.stem + ".txt")
 
-    if output_file_path.exists() and not OVERWRITE:
+        if output_file_path.exists() and not OVERWRITE:
+            if PRINT_CAPTIONING_STATUS:
+                print(f"Skipping {output_file_path} as it already exists.")
+            continue
+
         if PRINT_CAPTIONING_STATUS:
-            print(f"Skipping {output_file_path} as it already exists.")
-        return
+            print(f"Saving caption to {output_file_path}")
+        with open(output_file_path, "w", encoding="utf-8") as f:
+            f.write(caption)
 
-    if PRINT_CAPTIONING_STATUS:
-        print(f"Saving caption to {output_file_path}")
-    with open(output_file_path, "w", encoding="utf-8") as f:
-        f.write(caption.strip())
+        if PRINT_CAPTIONS:
+            print(f"Caption for {image_path.name}: {caption}")
 
-    if PRINT_CAPTIONS:
-        print(f"Caption for {input_image_path.name}: {caption}")
-
-    return caption.strip()
+    return captions
 
 
 processed = False
 
-# Use tqdm to add a progress bar
-for image_path in tqdm(image_files, desc="Processing images"):
-    if PRINT_CAPTIONING_STATUS:
-        print(f"Found file: {image_path.resolve()}")
-    caption = process_image(image_path)
+# Process images in batches using tqdm for progress bar
+batch_size = 16  # You can adjust the batch size based on your VRAM capacity
+process_bar = tqdm(total=len(image_files), desc="Processing images")
+for i in range(0, len(image_files), batch_size):
+    batch_files = image_files[i : i + batch_size]
+    captions = process_images_batch(batch_files)
+    process_bar.update(len(batch_files))
     processed = True
 
 if not processed:
