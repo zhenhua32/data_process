@@ -20,35 +20,46 @@ import torch.amp.autocast_mode
 from PIL import Image
 import os
 from tqdm import tqdm
+from tqdm.contrib.concurrent import process_map, thread_map
 from huggingface_hub import hf_hub_download
 import requests
 
 # Configuration options
-LOW_VRAM_MODE = False  # Option to switch to a model that uses less VRAM
+LOW_VRAM_MODE = True  # Option to switch to a model that uses less VRAM
 PRINT_CAPTIONS = False  # Option to print captions to the console during inference
 PRINT_CAPTIONING_STATUS = False  # Option to print captioning file status to the console
 OVERWRITE = True  # Option to allow overwriting existing caption files
 PREPEND_STRING = ""  # Prefix string to prepend to the generated caption
 APPEND_STRING = ""  # Suffix string to append to the generated caption
+RUN_LOCAL = True  # Option to run the script locally, 主要修改了一些模型路径
 
 # Specify input and output folder paths
-INPUT_FOLDER = Path(__file__).parent / "input"
+# INPUT_FOLDER = Path(__file__).parent / "input"
+INPUT_FOLDER = Path(r"E:\lora_traiun\yangying\dataset\000output_64_tag")
 OUTPUT_FOLDER = INPUT_FOLDER
 
 # LLM Settings
 VLM_PROMPT = "A descriptive caption for this image:\n"  # Changing this doesn't seem to matter. Help plz?
 TEMPERATURE = 0.5  # Controls the randomness of predictions. Lower values make the output more focused and deterministic, while higher values increase randomness.
 TOP_K = 10  # Limits the sampling pool to the top K most likely options at each step. A lower value makes the output more deterministic, while a higher value allows more diversity.
-MAX_NEW_TOKENS = 300  # The maximum number of tokens to generate. This limits the length of the generated text.
+MAX_NEW_TOKENS = 200  # The maximum number of tokens to generate. This limits the length of the generated text.
 
 # Clip path
-CLIP_PATH = "google/siglip-so400m-patch14-384"
-CHECKPOINT_PATH = Path("wpkklhc6")
+if RUN_LOCAL:
+    CLIP_PATH = r"G:\code\ai\ComfyUI_windows_portable\ComfyUI\models\clip\siglip-so400m-patch14-384"
+    CHECKPOINT_PATH = Path(r"G:\code\ai\ComfyUI_windows_portable\ComfyUI\models\Joy_caption")
+else:
+    CLIP_PATH = "google/siglip-so400m-patch14-384"
+    CHECKPOINT_PATH = Path("wpkklhc6")
+
 TITLE = "<h1><center>JoyCaption Pre-Alpha (2024-07-30a)</center></h1>"
 
 # Model paths based on VRAM usage
 if LOW_VRAM_MODE:
-    MODEL_PATH = "unsloth/llama-3-8b-bnb-4bit"
+    if RUN_LOCAL:
+        MODEL_PATH = r"G:\code\ai\ComfyUI_windows_portable\ComfyUI\models\LLM\Meta-Llama-3.1-8B-bnb-4bit"
+    else:
+        MODEL_PATH = "unsloth/llama-3-8b-bnb-4bit"
 else:
     MODEL_PATH = "unsloth/Meta-Llama-3.1-8B"
 
@@ -150,6 +161,7 @@ text_model.eval()
 # Image Adapter
 print("Loading image adapter")
 try:
+    # 是在这里初始化的, 连接图片和文本的模型
     image_adapter = ImageAdapter(clip_model.config.hidden_size, text_model.config.hidden_size)
     image_adapter.load_state_dict(torch.load(CHECKPOINT_PATH / "image_adapter.pt", map_location="cpu"))
     image_adapter.eval()
