@@ -2687,7 +2687,7 @@
         "Node name for S&R": "FluxTrainLoop"
       },
       "widgets_values": [
-        1500
+        500
       ],
       "color": "#232",
       "bgcolor": "#353"
@@ -2746,7 +2746,7 @@
         "Node name for S&R": "FluxTrainLoop"
       },
       "widgets_values": [
-        1500
+        500
       ],
       "color": "#232",
       "bgcolor": "#353"
@@ -2805,7 +2805,7 @@
         "Node name for S&R": "FluxTrainLoop"
       },
       "widgets_values": [
-        1500
+        500
       ],
       "color": "#232",
       "bgcolor": "#353"
@@ -2863,49 +2863,10 @@
         "Node name for S&R": "FluxTrainLoop"
       },
       "widgets_values": [
-        1500
+        500
       ],
       "color": "#232",
       "bgcolor": "#353"
-    },
-    {
-      "id": 138,
-      "type": "PrimitiveNode",
-      "pos": {
-        "0": 1447,
-        "1": -22
-      },
-      "size": {
-        "0": 256.2624206542969,
-        "1": 82
-      },
-      "flags": {},
-      "order": 17,
-      "mode": 0,
-      "inputs": [],
-      "outputs": [
-        {
-          "name": "INT",
-          "type": "INT",
-          "links": [
-            240,
-            241,
-            242,
-            243
-          ],
-          "widget": {
-            "name": "steps"
-          }
-        }
-      ],
-      "title": "每轮步数",
-      "properties": {
-        "Run widget replace on values": false
-      },
-      "widgets_values": [
-        1500,
-        "fixed"
-      ]
     },
     {
       "id": 112,
@@ -2951,7 +2912,7 @@
         1024,
         1024,
         1,
-        "E:\\lora_traiun\\jingtian\\dataset\\000output_120",
+        "E:\\lora_traiun\\yangying\\dataset\\000output_64_tag",
         "gbt",
         true,
         false,
@@ -3042,11 +3003,11 @@
       },
       "widgets_values": [
         "flux_lora_jingtian",
-        "E:\\lora_traiun\\jingtian\\dataset\\000lora",
+        "E:\\lora_traiun\\yangying\\dataset\\000lora_64_tag",
         16,
         1,
         0.0004,
-        6000,
+        2000,
         true,
         "disk",
         "disk",
@@ -3073,6 +3034,45 @@
         "enabled",
         true,
         true
+      ]
+    },
+    {
+      "id": 138,
+      "type": "PrimitiveNode",
+      "pos": {
+        "0": 1447,
+        "1": -22
+      },
+      "size": {
+        "0": 256.2624206542969,
+        "1": 82
+      },
+      "flags": {},
+      "order": 17,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "INT",
+          "type": "INT",
+          "links": [
+            240,
+            241,
+            242,
+            243
+          ],
+          "widget": {
+            "name": "steps"
+          }
+        }
+      ],
+      "title": "每轮步数",
+      "properties": {
+        "Run widget replace on values": false
+      },
+      "widgets_values": [
+        500,
+        "fixed"
       ]
     }
   ],
@@ -3779,10 +3779,10 @@
   "config": {},
   "extra": {
     "ds": {
-      "scale": 0.5644739300537773,
+      "scale": 1,
       "offset": [
-        -2760.9345846997685,
-        571.3456691356215
+        -873.2580828401962,
+        326.5670115531833
       ]
     }
   },
