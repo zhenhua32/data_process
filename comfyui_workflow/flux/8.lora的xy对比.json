@@ -104,7 +104,7 @@
       },
       "widgets_values": [
         "X: LoRA Batch, Y: LoRA Weight",
-        "SD1.5\\twitch_emotes_v1.3.safetensors",
+        "None",
         1,
         1,
         4,
