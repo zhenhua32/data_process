@@ -1,3 +1,7 @@
+"""
+操作标签
+"""
+
 import os
 import shutil
 from PIL import Image

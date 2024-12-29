@@ -1,3 +1,7 @@
+"""
+操作图片
+"""
+
 import os
 from PIL import Image
 from tqdm import tqdm
@@ -43,7 +47,7 @@ def resize_png_image(input_dir: str, output_dir: str, least_size: int = 1024):
     os.makedirs(output_dir, exist_ok=True)
 
     def run_one(filename):
-        if filename.endswith(".png") or filename.endswith(".jpg"):
+        if filename.endswith(".png") or filename.endswith(".jpg") or filename.endswith(".jpeg"):
             png_path = os.path.join(input_dir, filename)
             with Image.open(png_path) as img:
                 # 获取原始尺寸
@@ -70,7 +74,7 @@ def resize_png_image(input_dir: str, output_dir: str, least_size: int = 1024):
 
 if __name__ == "__main__":
     # 定义输入和输出目录
-    input_dir = r"E:\lora_traiun\yangying\dataset\000sd"
-    output_dir = r"E:\lora_traiun\yangying\dataset\000sd_png_1024"
+    input_dir = r"E:\lora_traiun\zhaolusi\dataset\000sd"
+    output_dir = r"E:\lora_traiun\zhaolusi\dataset\000sd_1024"
 
     resize_png_image(input_dir, output_dir, 1024)

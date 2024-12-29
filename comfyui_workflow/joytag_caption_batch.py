@@ -36,7 +36,8 @@ RUN_LOCAL = True  # Option to run the script locally, 主要修改了一些模�
 
 # Specify input and output folder paths
 # INPUT_FOLDER = Path(__file__).parent / "input"
-INPUT_FOLDER = Path(r"E:\lora_traiun\yangying\dataset\000output_64_tag")
+# TZH: 修改这里
+INPUT_FOLDER = Path(r"E:\lora_traiun\zhaolusi\dataset\000sd_1024_tag")
 OUTPUT_FOLDER = INPUT_FOLDER
 
 # LLM Settings
@@ -196,7 +197,7 @@ def process_images_batch(image_paths: list):
         VLM_PROMPT, return_tensors="pt", padding=False, truncation=False, add_special_tokens=False
     )
 
-    # Embed images
+    # Embed images 先调用 clip 模型, 然后再调用 image_adapter 模型
     with torch.amp.autocast_mode.autocast("cuda", enabled=True):
         vision_outputs = clip_model(pixel_values=images, output_hidden_states=True)
         image_features = vision_outputs.hidden_states[-2]
@@ -238,7 +239,7 @@ def process_images_batch(image_paths: list):
     print("input_ids shape", input_ids.shape)  # [4, 737]
     attention_mask = torch.ones_like(input_ids)
 
-    # Generate captions
+    # Generate captions 调用 LLM 模型生成文本
     generate_ids = text_model.generate(
         input_ids,
         inputs_embeds=inputs_embeds,
