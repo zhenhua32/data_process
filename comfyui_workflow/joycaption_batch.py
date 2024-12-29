@@ -77,10 +77,10 @@ def main():
         return
     logging.info(f"Found {len(image_paths)} images")
 
-    # Ignore all images that already have captions
+    # Ignore all images that already have captions 跳过那些已经有 caption 的图片
     image_paths = [path for path in image_paths if not Path(path).with_suffix(".txt").exists()]
 
-    # Load JoyCaption
+    # Load JoyCaption 加载模型
     tokenizer = AutoTokenizer.from_pretrained(args.model, use_fast=True)
     assert isinstance(tokenizer, PreTrainedTokenizer) or isinstance(
         tokenizer, PreTrainedTokenizerFast
@@ -88,6 +88,7 @@ def main():
     llava_model = LlavaForConditionalGeneration.from_pretrained(args.model, torch_dtype="bfloat16", device_map=0)
     assert isinstance(llava_model, LlavaForConditionalGeneration)
 
+    # 创建数据集
     dataset = ImageDataset(
         prompts, image_paths, tokenizer, llava_model.config.image_token_index, llava_model.config.image_seq_length
     )
@@ -119,7 +120,7 @@ def main():
         pixel_values = TVF.normalize(pixel_values, [0.5], [0.5])
         pixel_values = pixel_values.to(vision_dtype)
 
-        # Generate the captions
+        # Generate the captions 生成 caption
         generate_ids = llava_model.generate(
             input_ids=input_ids,
             pixel_values=pixel_values,
@@ -143,6 +144,7 @@ def main():
         captions = [c.strip() for c in captions]
 
         for path, caption in zip(batch["paths"], captions):
+            # 写入到文件中
             write_caption(Path(path), caption)
 
         pbar.update(len(captions))
@@ -151,14 +153,16 @@ def main():
 def trim_off_prompt(input_ids: list[int], eoh_id: int, eot_id: int) -> list[int]:
     # Trim off the prompt
     while True:
+        # 一直寻找 eoh_id, eoh_id 可能有多个
         try:
             i = input_ids.index(eoh_id)
         except ValueError:
             break
 
+        # 然后丢弃 eoh_id 之前的部分
         input_ids = input_ids[i + 1 :]
 
-    # Trim off the end
+    # Trim off the end  寻找 eot_id, 丢弃 eot_id 之后的部分
     try:
         i = input_ids.index(eot_id)
     except ValueError:
@@ -168,6 +172,12 @@ def trim_off_prompt(input_ids: list[int], eoh_id: int, eot_id: int) -> list[int]
 
 
 def write_caption(image_path: Path, caption: str):
+    """写入 caption
+
+    Args:
+        image_path (Path): _description_
+        caption (str): _description_
+    """
     caption_path = image_path.with_suffix(".txt")
 
     try:
@@ -211,10 +221,10 @@ class ImageDataset(Dataset):
     def __getitem__(self, idx: int) -> dict:
         path = self.paths[idx]
 
-        # Pick a prompt
+        # Pick a prompt 按权重随机选择一个 prompt
         prompt_str = random.choices(self.prompts, weights=[p.weight for p in self.prompts])[0].prompt
 
-        # Preprocess image
+        # Preprocess image 自定义图片处理流程
         # NOTE: I don't use the Processor here and instead do it manually.
         # This is because in my testing a simple resize in Pillow yields higher quality results than the Processor,
         # and the Processor had some buggy behavior on some images.
@@ -252,6 +262,7 @@ class ImageDataset(Dataset):
         input_tokens = []
         for token in convo_tokens:
             if token == self.image_token_id:
+                # 图片 token 重复
                 input_tokens.extend([self.image_token_id] * self.image_seq_length)
             else:
                 input_tokens.append(token)
@@ -267,13 +278,14 @@ class ImageDataset(Dataset):
         }
 
     def collate_fn(self, batch: list[dict]) -> dict:
-        # Filter out images that failed to load
+        # Filter out images that failed to load 过滤上一步中没结果的图片
         batch = [item for item in batch if item["pixel_values"] is not None]
 
         # Pad input_ids and attention_mask
         # Have to use left padding because HF's generate can't handle right padding it seems
         max_length = max(item["input_ids"].shape[0] for item in batch)
         n_pad = [max_length - item["input_ids"].shape[0] for item in batch]
+        # stack 之后的 shape 为 (batch_size, max_length)
         input_ids = torch.stack(
             [
                 torch.nn.functional.pad(item["input_ids"], (n, 0), value=self.pad_token_id)
@@ -299,9 +311,27 @@ class ImageDataset(Dataset):
 
 
 def parse_prompts(prompt_str: str | None, prompt_file: str | None) -> list[Prompt]:
+    """获取 Prompt 列表
+
+    Args:
+        prompt_str (str | None): _description_
+        prompt_file (str | None): _description_
+
+    Raises:
+        ValueError: _description_
+        ValueError: _description_
+        ValueError: _description_
+        ValueError: _description_
+        ValueError: _description_
+        ValueError: _description_
+
+    Returns:
+        list[Prompt]: _description_
+    """
     if prompt_str is not None and prompt_file is not None:
         raise ValueError("Cannot specify both --prompt and --prompt-file")
 
+    # 直接返回列表, 仅有一个元素
     if prompt_str is not None:
         return [Prompt(prompt=prompt_str, weight=1.0)]
 
@@ -317,6 +347,7 @@ def parse_prompts(prompt_str: str | None, prompt_file: str | None) -> list[Promp
 
     for item in data:
         if isinstance(item, str):
+            # 文本还是同样的处理
             prompts.append(Prompt(prompt=item, weight=1.0))
         elif (
             isinstance(item, dict)
@@ -325,6 +356,7 @@ def parse_prompts(prompt_str: str | None, prompt_file: str | None) -> list[Promp
             and isinstance(item["prompt"], str)
             and isinstance(item["weight"], (int, float))
         ):
+            # 字典可以带权重
             prompts.append(Prompt(prompt=item["prompt"], weight=item["weight"]))
         else:
             raise ValueError(
@@ -334,6 +366,7 @@ def parse_prompts(prompt_str: str | None, prompt_file: str | None) -> list[Promp
     if len(prompts) == 0:
         raise ValueError("No prompts found in JSON file")
 
+    # 权重和必须为正数
     if sum(p.weight for p in prompts) <= 0.0:
         raise ValueError("Prompt weights must sum to a positive number")
 
@@ -341,6 +374,18 @@ def parse_prompts(prompt_str: str | None, prompt_file: str | None) -> list[Promp
 
 
 def find_images(glob: str | None, filelist: str | Path | None) -> list[Path]:
+    """获取图片路径
+
+    Args:
+        glob (str | None): _description_
+        filelist (str | Path | None): _description_
+
+    Raises:
+        ValueError: _description_
+
+    Returns:
+        list[Path]: _description_
+    """
     if glob is None and filelist is None:
         raise ValueError("Must specify either --glob or --filelist")
 
@@ -349,6 +394,7 @@ def find_images(glob: str | None, filelist: str | Path | None) -> list[Path]:
     if glob is not None:
         paths.extend(Path(".").glob(glob))
 
+    # 按行读取图片路径
     if filelist is not None:
         paths.extend(
             (Path(line.strip()) for line in Path(filelist).read_text().strip().splitlines() if line.strip() != "")
