@@ -11,6 +11,7 @@ def update_damage(
     基础攻击力: float,
     面板攻击力: float,
     额外攻击力加成百分比: float,
+    额外攻击力: float,
     暴击率: float,
     暴伤: float,
     元素精通: float,
@@ -31,6 +32,7 @@ def update_damage(
         基础攻击力,
         面板攻击力,
         额外攻击力加成百分比 / 100,
+        额外攻击力,
         暴击率 / 100,
         暴伤 / 100,
         元素精通,
@@ -66,20 +68,21 @@ with gr.Blocks(title="火神伤害计算器") as demo:
             基础攻击力 = gr.Number(868, label="基础攻击力(白值)")
             面板攻击力 = gr.Number(2123, label="基础攻击力(白值+绿值)")
             额外攻击力加成百分比 = gr.Slider(minimum=0, maximum=500, value=0, step=1, label="额外攻击力加成百分比%")
+            额外攻击力 = gr.Number(0, label="额外攻击力", info="班尼特大招1110")
             暴击率 = gr.Slider(0, 100, 95.1, step=0.1, label="暴击率%")
             暴伤 = gr.Slider(50, 300, 233.7, step=0.1, label="暴伤%")
-            元素精通 = gr.Slider(0, 2000, 96, step=1, label="元素精通")
-            反应系数 = gr.Dropdown([1, 1.5, 2], value=2, label="反应系数", info="1.5: 蒸发, 2: 融化")
+            元素精通 = gr.Slider(0, 2000, 0, step=1, label="元素精通", info="算纯火伤时设为0")
+            反应系数 = gr.Dropdown([1, 1.5, 2], value=1, label="反应系数", info="1.5: 蒸发, 2: 融化")
             反应加成系数 = gr.Number(0, label="反应加成系数")
             元素伤害加成 = gr.Slider(0, 200, 46.6, step=0.1, label="元素伤害加成%")
-            伤害加成 = gr.Slider(0, 200, 0, step=0.1, label="伤害加成%")
-            技能倍率 = gr.Slider(100, 2000, 800.6, label="技能倍率%")
+            伤害加成 = gr.Slider(0, 200, 15, step=0.1, label="伤害加成%", info="黑曜套15")
+            技能倍率 = gr.Slider(100, 2000, 230.4, label="技能倍率%", info="火神战技230.4, 大招1380.6")
             角色等级 = gr.Slider(1, 90, 90, step=1, label="角色等级")
-            怪物等级 = gr.Slider(1, 120, 103, step=1, label="怪物等级")
+            怪物等级 = gr.Slider(1, 120, 95, step=1, label="怪物等级")
             减防系数 = gr.Slider(0, 100, 0, step=0.1, label="减防系数%")
             无视系数 = gr.Slider(0, 100, 0, step=0.1, label="无视系数%")
             抗性 = gr.Slider(-100, 100, 10, step=1, label="抗性%")
-            独立乘区 = gr.Slider(0, 100, 0, step=1, label="独立乘区%", info="如螭骨剑精一30%")
+            独立乘区 = gr.Slider(0, 100, 35, step=1, label="独立乘区%", info="如螭骨剑精一30%")
 
         with gr.Column(scale=2):
             # 输出组件
@@ -92,6 +95,7 @@ with gr.Blocks(title="火神伤害计算器") as demo:
         基础攻击力,
         面板攻击力,
         额外攻击力加成百分比,
+        额外攻击力,
         暴击率,
         暴伤,
         元素精通,
