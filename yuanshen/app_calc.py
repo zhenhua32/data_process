@@ -75,14 +75,14 @@ with gr.Blocks(title="火神伤害计算器") as demo:
             反应系数 = gr.Dropdown([1, 1.5, 2], value=1, label="反应系数", info="1.5: 蒸发, 2: 融化")
             反应加成系数 = gr.Number(0, label="反应加成系数")
             元素伤害加成 = gr.Slider(0, 200, 46.6, step=0.1, label="元素伤害加成%")
-            伤害加成 = gr.Slider(0, 200, 15, step=0.1, label="伤害加成%", info="黑曜套15")
+            伤害加成 = gr.Slider(0, 200, 15, step=0.1, label="伤害加成%", info="黑曜套15螭骨剑精一30")
             技能倍率 = gr.Slider(100, 2000, 230.4, label="技能倍率%", info="火神战技230.4, 大招1380.6")
             角色等级 = gr.Slider(1, 90, 90, step=1, label="角色等级")
             怪物等级 = gr.Slider(1, 120, 95, step=1, label="怪物等级")
             减防系数 = gr.Slider(0, 100, 0, step=0.1, label="减防系数%")
             无视系数 = gr.Slider(0, 100, 0, step=0.1, label="无视系数%")
             抗性 = gr.Slider(-100, 100, 10, step=1, label="抗性%")
-            独立乘区 = gr.Slider(0, 100, 35, step=1, label="独立乘区%", info="如螭骨剑精一30%")
+            独立乘区 = gr.Slider(0, 100, 0, step=1, label="独立乘区%", info="")
 
         with gr.Column(scale=2):
             # 输出组件
