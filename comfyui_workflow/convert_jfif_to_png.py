@@ -74,7 +74,7 @@ def resize_png_image(input_dir: str, output_dir: str, least_size: int = 1024):
 
 if __name__ == "__main__":
     # 定义输入和输出目录
-    input_dir = r"E:\lora_traiun\zhaolusi\dataset\000sd"
-    output_dir = r"E:\lora_traiun\zhaolusi\dataset\000sd_1024"
+    input_dir = r"E:\BaiduNetdiskDownload\精选图片\杨幂\010杨幂高清 手机壁纸"
+    output_dir = r"E:\BaiduNetdiskDownload\精选图片\杨幂\010杨幂高清 手机壁纸_1024"
 
     resize_png_image(input_dir, output_dir, 1024)
