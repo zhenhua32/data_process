@@ -2,7 +2,7 @@
 调用 modelscope 的模型
 每天上限 2000 次, 单个模型上限 500 次
 
-aigc 的模型有额外限制, 具体可以参考响应头.
+aigc 的模型有额外限制, 具体可以参考响应头. aigc 模型看起来是共用的, 共享 200 次生成.
 
 响应头	描述	示例值
 modelscope-ratelimit-requests-limit	用户当天限额	2000
@@ -73,10 +73,10 @@ def create_image_generations(prompt: str, size: str = "2048x2048", model: str = 
     # 获取剩余次数
     header = response.headers
     model_limit_info = {
-        "modelscope_ratelimit_model_requests_limit": header.get("Modelscope-Ratelimit-Model-Requests-Limit"),
-        "modelscope_ratelimit_model_requests_remaining": header.get("Modelscope-Ratelimit-Model-Requests-Remaining"),
-        "modelscope_ratelimit_requests_limit": header.get("Modelscope-Ratelimit-Requests-Limit"),
-        "modelscope_ratelimit_requests_remaining": header.get("Modelscope-Ratelimit-Requests-Remaining"),
+        "modelscope_ratelimit_model_requests_limit": int(header["Modelscope-Ratelimit-Model-Requests-Limit"]),
+        "modelscope_ratelimit_model_requests_remaining": int(header["Modelscope-Ratelimit-Model-Requests-Remaining"]),
+        "modelscope_ratelimit_requests_limit": int(header["Modelscope-Ratelimit-Requests-Limit"]),
+        "modelscope_ratelimit_requests_remaining": int(header["Modelscope-Ratelimit-Requests-Remaining"]),
     }
 
     task_id = response.json()["task_id"]
@@ -113,11 +113,11 @@ def get_task_result(task_id: str):
 
 if __name__ == "__main__":
     prompt = "少女怀春, 樱花飘零, 阳光洒落, 细腻画风, 高清, 4K"
-    task_id, limit_info = create_image_generations(prompt, size="2048x2048")
+    task_id, limit_info = create_image_generations(prompt, size="2048x2048", model="Tongyi-MAI/Z-Image-Turbo")
     print("Task ID:", task_id)
     print("Limit Info:", limit_info)
 
     image, result_data = get_task_result(task_id)
     if image:
-        image.save("result_image.jpg")
-        print("Image saved as result_image.jpg")
+        image.save("result_image2.jpg")
+        print("Image saved as result_image2.jpg")
