@@ -1,0 +1,277 @@
+{
+  "https://m.samrugs.com/pinpai/baihuodq/": {
+    "brand_count": "61521",
+    "cate": "百货",
+    "start_url": "https://api.phb123.com/e/extend/api/index.php?cate=526&page=1&m=ppdq&c=pplist&type=2"
+  },
+  "https://m.samrugs.com/pinpai/leqiyinxiangdq/": {
+    "brand_count": "479",
+    "cate": "乐器音像",
+    "start_url": "https://api.phb123.com/e/extend/api/index.php?cate=525&page=1&m=ppdq&c=pplist&type=2"
+  },
+  "https://m.samrugs.com/pinpai/yulexuexidq/": {
+    "brand_count": "627",
+    "cate": "娱乐/学习",
+    "start_url": "https://api.phb123.com/e/extend/api/index.php?cate=524&page=1&m=ppdq&c=pplist&type=2"
+  },
+  "https://m.samrugs.com/pinpai/lipindq/": {
+    "brand_count": "724",
+    "cate": "礼品",
+    "start_url": "https://api.phb123.com/e/extend/api/index.php?cate=523&page=1&m=ppdq&c=pplist&type=2"
+  },
+  "https://m.samrugs.com/pinpai/wujindq/": {
+    "brand_count": "1551",
+    "cate": "五金",
+    "start_url": "https://api.phb123.com/e/extend/api/index.php?cate=522&page=1&m=ppdq&c=pplist&type=2"
+  },
+  "https://m.samrugs.com/pinpai/chujudq/": {
+    "brand_count": "2931",
+    "cate": "厨具",
+    "start_url": "https://api.phb123.com/e/extend/api/index.php?cate=521&page=1&m=ppdq&c=pplist&type=2"
+  },
+  "https://m.samrugs.com/pinpai/diydq/": {
+    "brand_count": "648",
+    "cate": "DIY",
+    "start_url": "https://api.phb123.com/e/extend/api/index.php?cate=520&page=1&m=ppdq&c=pplist&type=2"
+  },
+  "https://m.samrugs.com/pinpai/jiajuriyongdq/": {
+    "brand_count": "2761",
+    "cate": "家居日用",
+    "start_url": "https://api.phb123.com/e/extend/api/index.php?cate=519&page=1&m=ppdq&c=pplist&type=2"
+  },
+  "https://m.samrugs.com/pinpai/bangongdq/": {
+    "brand_count": "1743",
+    "cate": "办公",
+    "start_url": "https://api.phb123.com/e/extend/api/index.php?cate=518&page=1&m=ppdq&c=pplist&type=2"
+  },
+  "https://m.samrugs.com/pinpai/weishengchuwudq/": {
+    "brand_count": "1123",
+    "cate": "卫生/储物",
+    "start_url": "https://api.phb123.com/e/extend/api/index.php?cate=517&page=1&m=ppdq&c=pplist&type=2"
+  },
+  "https://m.samrugs.com/pinpai/chuweiweiyudq/": {
+    "brand_count": "870",
+    "cate": "厨卫卫浴",
+    "start_url": "https://api.phb123.com/e/extend/api/index.php?cate=516&page=1&m=ppdq&c=pplist&type=2"
+  },
+  "https://m.samrugs.com/pinpai/jiatingbaojiandq/": {
+    "brand_count": "502",
+    "cate": "家庭保健",
+    "start_url": "https://api.phb123.com/e/extend/api/index.php?cate=515&page=1&m=ppdq&c=pplist&type=2"
+  },
+  "https://m.samrugs.com/pinpai/jiafangdq/": {
+    "brand_count": "2452",
+    "cate": "家纺",
+    "start_url": "https://api.phb123.com/e/extend/api/index.php?cate=514&page=1&m=ppdq&c=pplist&type=2"
+  },
+  "https://m.samrugs.com/pinpai/canjudq/": {
+    "brand_count": "356",
+    "cate": "餐具",
+    "start_url": "https://api.phb123.com/e/extend/api/index.php?cate=513&page=1&m=ppdq&c=pplist&type=2"
+  },
+  "https://m.samrugs.com/pinpai/buyiruanshidq/": {
+    "brand_count": "2609",
+    "cate": "布艺软饰",
+    "start_url": "https://api.phb123.com/e/extend/api/index.php?cate=512&page=1&m=ppdq&c=pplist&type=2"
+  },
+  "https://m.samrugs.com/pinpai/jiajudq/": {
+    "brand_count": "4569",
+    "cate": "家具",
+    "start_url": "https://api.phb123.com/e/extend/api/index.php?cate=511&page=1&m=ppdq&c=pplist&type=2"
+  },
+  "https://m.samrugs.com/pinpai/dengjuzhaomingdq/": {
+    "brand_count": "2619",
+    "cate": "灯具照明",
+    "start_url": "https://api.phb123.com/e/extend/api/index.php?cate=510&page=1&m=ppdq&c=pplist&type=2"
+  },
+  "https://m.samrugs.com/pinpai/lingshidq/": {
+    "brand_count": "4303",
+    "cate": "零食",
+    "start_url": "https://api.phb123.com/e/extend/api/index.php?cate=509&page=1&m=ppdq&c=pplist&type=2"
+  },
+  "https://m.samrugs.com/pinpai/jiancaidq/": {
+    "brand_count": "1520",
+    "cate": "建材",
+    "start_url": "https://api.phb123.com/e/extend/api/index.php?cate=508&page=1&m=ppdq&c=pplist&type=2"
+  },
+  "https://m.samrugs.com/pinpai/shengxiandq/": {
+    "brand_count": "3604",
+    "cate": "生鲜",
+    "start_url": "https://api.phb123.com/e/extend/api/index.php?cate=507&page=1&m=ppdq&c=pplist&type=2"
+  },
+  "https://m.samrugs.com/pinpai/zhuangxiudq/": {
+    "brand_count": "2028",
+    "cate": "装修",
+    "start_url": "https://api.phb123.com/e/extend/api/index.php?cate=506&page=1&m=ppdq&c=pplist&type=2"
+  },
+  "https://m.samrugs.com/pinpai/meishidq/": {
+    "brand_count": "3238",
+    "cate": "美食",
+    "start_url": "https://api.phb123.com/e/extend/api/index.php?cate=505&page=1&m=ppdq&c=pplist&type=2"
+  },
+  "https://m.samrugs.com/pinpai/yundongfuzhuangdq/": {
+    "brand_count": "1424",
+    "cate": "运动",
+    "start_url": "https://api.phb123.com/e/extend/api/index.php?cate=503&page=1&m=ppdq&c=pplist&type=2"
+  },
+  "https://m.samrugs.com/pinpai/nongzidq/": {
+    "brand_count": "219",
+    "cate": "农资",
+    "start_url": "https://api.phb123.com/e/extend/api/index.php?cate=502&page=1&m=ppdq&c=pplist&type=2"
+  },
+  "https://m.samrugs.com/pinpai/chongwudq/": {
+    "brand_count": "616",
+    "cate": "宠物",
+    "start_url": "https://api.phb123.com/e/extend/api/index.php?cate=500&page=1&m=ppdq&c=pplist&type=2"
+  },
+  "https://m.samrugs.com/pinpai/jianshendq/": {
+    "brand_count": "1462",
+    "cate": "健身",
+    "start_url": "https://api.phb123.com/e/extend/api/index.php?cate=499&page=1&m=ppdq&c=pplist&type=2"
+  },
+  "https://m.samrugs.com/pinpai/xianhuadq/": {
+    "brand_count": "475",
+    "cate": "鲜花",
+    "start_url": "https://api.phb123.com/e/extend/api/index.php?cate=498&page=1&m=ppdq&c=pplist&type=2"
+  },
+  "https://m.samrugs.com/pinpai/yingyangbaojiandq/": {
+    "brand_count": "1330",
+    "cate": "营养保健",
+    "start_url": "https://api.phb123.com/e/extend/api/index.php?cate=496&page=1&m=ppdq&c=pplist&type=2"
+  },
+  "https://m.samrugs.com/pinpai/huwaidq/": {
+    "brand_count": "3107",
+    "cate": "户外",
+    "start_url": "https://api.phb123.com/e/extend/api/index.php?cate=495&page=1&m=ppdq&c=pplist&type=2"
+  },
+  "https://m.samrugs.com/pinpai/techandq/": {
+    "brand_count": "831",
+    "cate": "特产/进口食品",
+    "start_url": "https://api.phb123.com/e/extend/api/index.php?cate=494&page=1&m=ppdq&c=pplist&type=2"
+  },
+  "https://m.samrugs.com/pinpai/liangyoumimiandq/": {
+    "brand_count": "1984",
+    "cate": "粮油米面",
+    "start_url": "https://api.phb123.com/e/extend/api/index.php?cate=492&page=1&m=ppdq&c=pplist&type=2"
+  },
+  "https://m.samrugs.com/pinpai/meifadq/": {
+    "brand_count": "774",
+    "cate": "美发",
+    "start_url": "https://api.phb123.com/e/extend/api/index.php?cate=491&page=1&m=ppdq&c=pplist&type=2"
+  },
+  "https://m.samrugs.com/pinpai/yingyouyongpindq/": {
+    "brand_count": "1044",
+    "cate": "婴幼用品",
+    "start_url": "https://api.phb123.com/e/extend/api/index.php?cate=488&page=1&m=ppdq&c=pplist&type=2"
+  },
+  "https://m.samrugs.com/pinpai/yingyoushipindq/": {
+    "brand_count": "416",
+    "cate": "婴幼食品",
+    "start_url": "https://api.phb123.com/e/extend/api/index.php?cate=486&page=1&m=ppdq&c=pplist&type=2"
+  },
+  "https://m.samrugs.com/pinpai/tongzhuangdq/": {
+    "brand_count": "1288",
+    "cate": "童装",
+    "start_url": "https://api.phb123.com/e/extend/api/index.php?cate=483&page=1&m=ppdq&c=pplist&type=2"
+  },
+  "https://m.samrugs.com/pinpai/neiyidq/": {
+    "brand_count": "651",
+    "cate": "内衣",
+    "start_url": "https://api.phb123.com/e/extend/api/index.php?cate=480&page=1&m=ppdq&c=pplist&type=2"
+  },
+  "https://m.samrugs.com/pinpai/wangluoshebeidq/": {
+    "brand_count": "573",
+    "cate": "网络设备",
+    "start_url": "https://api.phb123.com/e/extend/api/index.php?cate=479&page=1&m=ppdq&c=pplist&type=2"
+  },
+  "https://m.samrugs.com/pinpai/yunchanyongpindq/": {
+    "brand_count": "1408",
+    "cate": "孕产用品",
+    "start_url": "https://api.phb123.com/e/extend/api/index.php?cate=478&page=1&m=ppdq&c=pplist&type=2"
+  },
+  "https://m.samrugs.com/pinpai/nanzhuangdq/": {
+    "brand_count": "6999",
+    "cate": "男装",
+    "start_url": "https://api.phb123.com/e/extend/api/index.php?cate=477&page=1&m=ppdq&c=pplist&type=2"
+  },
+  "https://m.samrugs.com/pinpai/wanjudq/": {
+    "brand_count": "1649",
+    "cate": "玩具",
+    "start_url": "https://api.phb123.com/e/extend/api/index.php?cate=475&page=1&m=ppdq&c=pplist&type=2"
+  },
+  "https://m.samrugs.com/pinpai/nvzhuangdq/": {
+    "brand_count": "9137",
+    "cate": "女装",
+    "start_url": "https://api.phb123.com/e/extend/api/index.php?cate=474&page=1&m=ppdq&c=pplist&type=2"
+  },
+  "https://m.samrugs.com/pinpai/qicheyongpindq/": {
+    "brand_count": "2424",
+    "cate": "汽车用品",
+    "start_url": "https://api.phb123.com/e/extend/api/index.php?cate=473&page=1&m=ppdq&c=pplist&type=2"
+  },
+  "https://m.samrugs.com/pinpai/peijianpeishidq/": {
+    "brand_count": "2536",
+    "cate": "配件配饰",
+    "start_url": "https://api.phb123.com/e/extend/api/index.php?cate=472&page=1&m=ppdq&c=pplist&type=2"
+  },
+  "https://m.samrugs.com/pinpai/shipindq/": {
+    "brand_count": "2168",
+    "cate": "饰品",
+    "start_url": "https://api.phb123.com/e/extend/api/index.php?cate=471&page=1&m=ppdq&c=pplist&type=2"
+  },
+  "https://m.samrugs.com/pinpai/xiangbaodq/": {
+    "brand_count": "2916",
+    "cate": "箱包",
+    "start_url": "https://api.phb123.com/e/extend/api/index.php?cate=470&page=1&m=ppdq&c=pplist&type=2"
+  },
+  "https://m.samrugs.com/pinpai/shoubiaodq/": {
+    "brand_count": "494",
+    "cate": "手表",
+    "start_url": "https://api.phb123.com/e/extend/api/index.php?cate=469&page=1&m=ppdq&c=pplist&type=2"
+  },
+  "https://m.samrugs.com/pinpai/jiadiandq/": {
+    "brand_count": "2371",
+    "cate": "家电",
+    "start_url": "https://api.phb123.com/e/extend/api/index.php?cate=468&page=1&m=ppdq&c=pplist&type=2"
+  },
+  "https://m.samrugs.com/pinpai/xiewadq/": {
+    "brand_count": "4305",
+    "cate": "鞋袜",
+    "start_url": "https://api.phb123.com/e/extend/api/index.php?cate=467&page=1&m=ppdq&c=pplist&type=2"
+  },
+  "https://m.samrugs.com/pinpai/yanjingdq/": {
+    "brand_count": "797",
+    "cate": "眼镜",
+    "start_url": "https://api.phb123.com/e/extend/api/index.php?cate=466&page=1&m=ppdq&c=pplist&type=2"
+  },
+  "https://m.samrugs.com/pinpai/zhiyezhuangdq/": {
+    "brand_count": "1640",
+    "cate": "工作服/职业装",
+    "start_url": "https://api.phb123.com/e/extend/api/index.php?cate=465&page=1&m=ppdq&c=pplist&type=2"
+  },
+  "https://m.samrugs.com/pinpai/zhubaodq/": {
+    "brand_count": "2020",
+    "cate": "珠宝",
+    "start_url": "https://api.phb123.com/e/extend/api/index.php?cate=464&page=1&m=ppdq&c=pplist&type=2"
+  },
+  "https://m.samrugs.com/pinpai/yingyindianqidq/": {
+    "brand_count": "3854",
+    "cate": "影音电器",
+    "start_url": "https://api.phb123.com/e/extend/api/index.php?cate=352&page=1&m=ppdq&c=pplist&type=2"
+  },
+  "https://m.samrugs.com/pinpai/shumadq/": {
+    "brand_count": "3147",
+    "cate": "数码",
+    "start_url": "https://api.phb123.com/e/extend/api/index.php?cate=351&page=1&m=ppdq&c=pplist&type=2"
+  },
+  "https://m.samrugs.com/pinpai/meizhuangdq/": {
+    "brand_count": "2296",
+    "cate": "美妆",
+    "start_url": "https://api.phb123.com/e/extend/api/index.php?cate=3&page=1&m=ppdq&c=pplist&type=2"
+  },
+  "https://m.samrugs.com/pinpai/financedq/": {
+    "brand_count": "49",
+    "cate": "金融",
+    "start_url": "https://api.phb123.com/e/extend/api/index.php?cate=3475&page=1&m=ppdq&c=pplist&type=2"
+  }
+}
